@@ -22,7 +22,7 @@ public class TriangulatedModel extends Model {
                 this.polygons.add(new ArrayList<>(polygon));
             } else {
 
-                Integer v0 = polygon.get(0); // Первая вершина - "центр веера"
+                Integer v0 = polygon.get(0);
 
                 for (int i = 1; i < polygon.size() - 1; i++) {
                     ArrayList<Integer> triangle = new ArrayList<>();

@@ -5,12 +5,6 @@ import java.util.Arrays;
 import java.util.Scanner;
 
 public class ObjReader {
-
-    /**
-     * Статический метод для чтения и парсинга содержимого OBJ-файла.
-     * @param fileContent Полное строковое содержимое OBJ-файла.
-     * @return Заполненный объект Model.
-     */
     public static Model read(String fileContent) {
         Model model = new Model();
         Scanner scanner = new Scanner(fileContent);

@@ -15,7 +15,7 @@ public class TriangulationSwingApp extends JFrame {
         setTitle("Триангуляция");
         setSize(800, 600);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLocationRelativeTo(null); // Центрирование окна
+        setLocationRelativeTo(null);
 
         setLayout(new BorderLayout());
 
@@ -121,7 +121,7 @@ public class TriangulationSwingApp extends JFrame {
 
 
             if (resultModel != null) {
-                g2.setColor(Color.BLUE);
+                g2.setColor(Color.RED);
                 g2.setStroke(new BasicStroke(1));
 
                 for (ArrayList<Integer> poly : resultModel.polygons) {
@@ -143,7 +143,7 @@ public class TriangulationSwingApp extends JFrame {
                     awtPoly.addPoint((int)v3.x, (int)v3.y);
                     g2.fillPolygon(awtPoly);
 
-                    g2.setColor(Color.BLUE);
+                    g2.setColor(Color.RED);
                 }
             }
         }
