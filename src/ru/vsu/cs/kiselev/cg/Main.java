@@ -8,7 +8,7 @@ public class Main {
     public static void main(String[] args) {
         try {
             String fileContent = Files.readString(Path.of("C:/Users/orlij/Desktop/test.obj"));
-            Model originalModel = ObjReader.read(fileContent); // Используется ObjReader
+            Model originalModel = ObjReader.read(fileContent);
 
             System.out.println("Исходные полигоны: " + originalModel.polygons.size());
 
@@ -16,7 +16,7 @@ public class Main {
 
             System.out.println("Треугольники после обработки: " + triangulatedModel.polygons.size());
 
-            ObjWriter.write("cube_triangulated.obj", triangulatedModel); // Используется ObjWriter
+            ObjWriter.write("cube_triangulated.obj", triangulatedModel);
 
             System.out.println("Файл успешно сохранен!");
 

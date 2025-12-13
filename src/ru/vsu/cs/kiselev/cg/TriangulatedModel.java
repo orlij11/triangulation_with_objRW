@@ -1,7 +1,6 @@
 package ru.vsu.cs.kiselev.cg;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class TriangulatedModel extends Model {
 
