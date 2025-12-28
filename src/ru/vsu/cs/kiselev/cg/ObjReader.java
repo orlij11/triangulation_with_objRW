@@ -1,74 +1,42 @@
 package ru.vsu.cs.kiselev.cg;
 
+import java.io.*;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Scanner;
 
 public class ObjReader {
-    public static Model read(String fileContent) {
+
+    public static Model read(File file) throws IOException {
         Model model = new Model();
-        Scanner scanner = new Scanner(fileContent);
 
-        while (scanner.hasNextLine()) {
-            String line = scanner.nextLine().trim();
+        try (BufferedReader br = new BufferedReader(new FileReader(file))) {
+            String line;
 
-            if (line.isEmpty() || line.startsWith("#")) {
-                continue;
-            }
+            while ((line = br.readLine()) != null) {
+                line = line.trim();
 
-            String[] tokens = line.split("\\s+");
-            if (tokens.length == 0) continue;
-
-            String type = tokens[0];
-            String[] data = Arrays.copyOfRange(tokens, 1, tokens.length);
-
-            try {
-                switch (type) {
-                    case "v":
-                        parseVertex(data, model);
-                        break;
-                    case "f":
-                        parseFace(data, model);
-                        break;
+                if (line.startsWith("v ")) {
+                    String[] parts = line.split("\\s+");
+                    float x = Float.parseFloat(parts[1]);
+                    float y = Float.parseFloat(parts[2]);
+                    float z = Float.parseFloat(parts[3]);
+                    model.vertices.add(new Vector3f(x, y, z));
                 }
-            } catch (Exception e) {
-                System.err.println("Ошибка парсинга строки: " + line + ". " + e.getMessage());
+
+                if (line.startsWith("f ")) {
+                    String[] parts = line.split("\\s+");
+                    ArrayList<Integer> polygon = new ArrayList<>();
+
+                    for (int i = 1; i < parts.length; i++) {
+                        String indexStr = parts[i].split("/")[0];
+                        int index = Integer.parseInt(indexStr) - 1;
+                        polygon.add(index);
+                    }
+
+                    model.polygons.add(polygon);
+                }
             }
         }
-        scanner.close();
+
         return model;
-    }
-
-    private static void parseVertex(String[] data, Model model) {
-        if (data.length < 3) {
-            throw new IllegalArgumentException("Недостаточно данных для вершины.");
-        }
-        float x = Float.parseFloat(data[0]);
-        float y = Float.parseFloat(data[1]);
-        float z = Float.parseFloat(data[2]);
-        model.vertices.add(new Vector3f(x, y, z));
-    }
-
-    private static void parseFace(String[] data, Model model) {
-        if (data.length < 3) {
-            throw new IllegalArgumentException("Полигон должен содержать минимум 3 вершины.");
-        }
-
-        ArrayList<Integer> polygon = new ArrayList<>();
-
-        for (String facePart : data) {
-            String[] indices = facePart.split("/");
-            int vertexIndex = Integer.parseInt(indices[0]);
-
-            if (vertexIndex > 0) {
-                polygon.add(vertexIndex - 1);
-            } else if (vertexIndex < 0) {
-                throw new UnsupportedOperationException("Относительная индексация не поддерживается.");
-            }
-        }
-
-        if (polygon.size() >= 3) {
-            model.polygons.add(polygon);
-        }
     }
 }
