@@ -39,4 +39,40 @@ public class ObjTriangulationTest {
     void testPentagonObj() throws Exception {
         testObjFile("test-files/pentagon.obj", "test-files/pentagon_out.obj");
     }
+    @Test
+    void testFemaleObj() throws Exception {
+        testObjFile("test-files/WrapedFemale.obj", "test-files/WrapedFemale_out.obj");
+    }
+    @Test
+    void testSkullObj() throws Exception {
+        testObjFile("test-files/WrapedSkull.obj", "test-files/WrapedSkull_out.obj");
+    }
+
+    @Test
+    void testBodyObj() throws Exception {
+        testObjFile("test-files/WrapBody.obj", "test-files/WrapBody_out.obj");
+    }
+
+    @Test
+    void testWrapHandObj() throws Exception {
+        testObjFile("test-files/WrapHand.obj", "test-files/WrapHand_out.obj");
+    }
+
+    @Test
+    void testWrapHeadObj() throws Exception {
+        testObjFile("test-files/WrapHead.obj", "test-files/WrapHead_out.obj");
+    }
+
+    @Test
+    void testWrapJawObj() throws Exception {
+        testObjFile("test-files/WrapJaw.obj", "test-files/WrapJaw_out.obj");
+    }
+
+    @Test
+    void testWrapHeadWithObj() throws Exception {
+        testObjFile("test-files/WrapHeadWithMouthSocket.obj", "test-files/WrapHeadWith_out.obj");
+    }
+
 }
+
+

@@ -4,63 +4,46 @@ import java.util.*;
 
 public class TriangulatedModel extends Model {
 
-    public TriangulatedModel(Model sourceModel) {
-        this.vertices = new ArrayList<>(sourceModel.vertices);
-        this.textureVertices = new ArrayList<>(sourceModel.textureVertices);
-        this.normals = new ArrayList<>(sourceModel.normals);
+    private static final int MAX_POLYGON_SIZE = 10_000;
+
+    public TriangulatedModel(Model source) {
+        this.vertices = source.vertices;
+        this.textureVertices = source.textureVertices;
+        this.normals = source.normals;
         this.polygons = new ArrayList<>();
 
-        triangulate(sourceModel.polygons);
+        triangulate(source.polygons);
     }
 
-    private void triangulate(ArrayList<Polygon> sourcePolygons) {
-        for (Polygon polygon : sourcePolygons) {
+    private void triangulate(ArrayList<Polygon> src) {
+        for (Polygon p : src) {
 
-            int n = polygon.getVertexIndices().size();
+            int n = p.getVertexIndices().size();
+
             if (n < 3) continue;
 
             if (n == 3) {
-                polygons.add(copyPolygon(polygon));
+                polygons.add(p);
                 continue;
             }
 
-            int v0 = polygon.getVertexIndices().get(0);
+            if (n > MAX_POLYGON_SIZE) {
+                throw new IllegalArgumentException("Polygon too large: " + n);
+            }
+
+            int v0 = p.getVertexIndices().get(0);
 
             for (int i = 1; i < n - 1; i++) {
                 Polygon tri = new Polygon();
 
-                tri.setVertexIndices(new ArrayList<>(List.of(
-                        v0,
-                        polygon.getVertexIndices().get(i),
-                        polygon.getVertexIndices().get(i + 1)
-                )));
-
-                if (!polygon.getTextureVertexIndices().isEmpty()) {
-                    tri.setTextureVertexIndices(new ArrayList<>(List.of(
-                            polygon.getTextureVertexIndices().get(0),
-                            polygon.getTextureVertexIndices().get(i),
-                            polygon.getTextureVertexIndices().get(i + 1)
-                    )));
-                }
-
-                if (!polygon.getNormalIndices().isEmpty()) {
-                    tri.setNormalIndices(new ArrayList<>(List.of(
-                            polygon.getNormalIndices().get(0),
-                            polygon.getNormalIndices().get(i),
-                            polygon.getNormalIndices().get(i + 1)
-                    )));
-                }
+                ArrayList<Integer> v = new ArrayList<>(3);
+                v.add(v0);
+                v.add(p.getVertexIndices().get(i));
+                v.add(p.getVertexIndices().get(i + 1));
+                tri.setVertexIndices(v);
 
                 polygons.add(tri);
             }
         }
-    }
-
-    private Polygon copyPolygon(Polygon src) {
-        Polygon p = new Polygon();
-        p.setVertexIndices(new ArrayList<>(src.getVertexIndices()));
-        p.setTextureVertexIndices(new ArrayList<>(src.getTextureVertexIndices()));
-        p.setNormalIndices(new ArrayList<>(src.getNormalIndices()));
-        return p;
     }
 }
