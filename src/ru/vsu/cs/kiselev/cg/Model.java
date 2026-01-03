@@ -3,15 +3,9 @@ package ru.vsu.cs.kiselev.cg;
 import java.util.ArrayList;
 
 public class Model {
+
     public ArrayList<Vector3f> vertices = new ArrayList<>();
-    public ArrayList<ArrayList<Integer>> polygons = new ArrayList<>();
-
-    public Model() {}
-
-    public Model(Model other) {
-        this.vertices = new ArrayList<>(other.vertices);
-        for (ArrayList<Integer> poly : other.polygons) {
-            this.polygons.add(new ArrayList<>(poly));
-        }
-    }
+    public ArrayList<Vector2f> textureVertices = new ArrayList<>();
+    public ArrayList<Vector3f> normals = new ArrayList<>();
+    public ArrayList<Polygon> polygons = new ArrayList<>();
 }
