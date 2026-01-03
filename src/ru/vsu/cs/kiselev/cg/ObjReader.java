@@ -58,21 +58,27 @@ public class ObjReader {
         }
     }
 
-    protected static Vector2f parseTextureVertex(final ArrayList<String> wordsInLineWithoutToken, int lineInd) {
+    protected static Vector2f parseTextureVertex(
+            final ArrayList<String> wordsInLineWithoutToken,
+            int lineInd
+    ) {
         try {
-            if (wordsInLineWithoutToken.size() > 2) {
-                throw new ObjReaderException("Too many texture vertex arguments. Expected 2, got " + wordsInLineWithoutToken.size(), lineInd);
+            if (wordsInLineWithoutToken.size() < 2) {
+                throw new ObjReaderException(
+                        "Too few texture vertex arguments. Expected at least 2, got " +
+                                wordsInLineWithoutToken.size(),
+                        lineInd
+                );
             }
 
-            return new Vector2f(
-                    Float.parseFloat(wordsInLineWithoutToken.get(0)),
-                    Float.parseFloat(wordsInLineWithoutToken.get(1)));
+            // Берём ТОЛЬКО u и v
+            float u = Float.parseFloat(wordsInLineWithoutToken.get(0));
+            float v = Float.parseFloat(wordsInLineWithoutToken.get(1));
 
-        } catch(NumberFormatException e) {
+            return new Vector2f(u, v);
+
+        } catch (NumberFormatException e) {
             throw new ObjReaderException("Failed to parse float value.", lineInd);
-
-        } catch(IndexOutOfBoundsException e) {
-            throw new ObjReaderException("Too few texture vertex arguments.", lineInd);
         }
     }
 

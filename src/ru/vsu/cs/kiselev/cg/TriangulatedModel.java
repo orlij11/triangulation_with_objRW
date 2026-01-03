@@ -4,7 +4,6 @@ import java.util.*;
 
 public class TriangulatedModel extends Model {
 
-    private static final int MAX_POLYGON_SIZE = 10_000;
 
     public TriangulatedModel(Model source) {
         this.vertices = source.vertices;
@@ -25,10 +24,6 @@ public class TriangulatedModel extends Model {
             if (n == 3) {
                 polygons.add(p);
                 continue;
-            }
-
-            if (n > MAX_POLYGON_SIZE) {
-                throw new IllegalArgumentException("Polygon too large: " + n);
             }
 
             int v0 = p.getVertexIndices().get(0);

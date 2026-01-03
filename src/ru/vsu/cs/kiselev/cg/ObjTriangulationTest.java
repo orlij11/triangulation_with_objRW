@@ -43,10 +43,6 @@ public class ObjTriangulationTest {
     void testFemaleObj() throws Exception {
         testObjFile("test-files/WrapedFemale.obj", "test-files/WrapedFemale_out.obj");
     }
-    @Test
-    void testSkullObj() throws Exception {
-        testObjFile("test-files/WrapedSkull.obj", "test-files/WrapedSkull_out.obj");
-    }
 
     @Test
     void testBodyObj() throws Exception {

@@ -14,7 +14,6 @@ public class ObjWriter {
         }
 
         try (FileWriter writer = new FileWriter(filename)) {
-            writer.write("# Экспортировано ObjWriter\n");
             writer.write("# Вершин: " + model.vertices.size() + "\n");
             writer.write("# Текстурных координат: " + model.textureVertices.size() + "\n");
             writer.write("# Нормалей: " + model.normals.size() + "\n");
